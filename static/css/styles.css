@@ -1,0 +1,15 @@
+/* styles.css */
+.giphy-embed {
+    border-radius: 8px;
+  }
+  
+  .form-checkbox,
+  .form-radio {
+    transition: duration-300 ease-in-out;
+  }
+  
+  .form-checkbox:focus,
+  .form-radio:focus {
+    ring: 2px solid #3b82f6;
+  }
+  

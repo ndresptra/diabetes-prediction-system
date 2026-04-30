@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Diabetes Prediction</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.1.2/dist/tailwind.min.css" rel="stylesheet" />
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}" />
+    <style>
+        .smooth-loop {
+            transition: opacity 0.3s ease-in-out;
+        }
+    </style>
+  </head>
+  <body class="bg-gray-50 min-h-screen flex items-center justify-center relative">
+    <div class="absolute top-0 left-0 w-full h-full overflow-hidden">
+        <video autoplay loop muted playsinline class="fixed top-0 left-0 w-full h-full object-cover z-[-1] smooth-loop">
+            <source src="{{ url_for('static', filename='video/bg.mp4') }}" type="video/mp4">
+        </video>
+    </div>    
+    <div class="bg-white bg-opacity-80 shadow-lg rounded-xl p-8 w-full max-w-lg transition-transform transform hover:scale-105 duration-300 ease-in-out">
+        <h1 class="text-3xl font-bold mb-4 text-center text-gray-800">Prediksi Penyakit Diabetes</h1>
+
+        <!-- Centered Animation -->
+        <div class="flex justify-center items-center mt-4 mb-4">
+            <div style="width: 30%; height: 0; padding-bottom: 30%; position: relative;">
+                <img src="https://media.giphy.com/media/JUMMXHFcTdF1CZflNv/giphy.gif" width="100%" height="100%" style="position: absolute;" alt="Animated GIF">
+            </div>
+        </div>
+    
+      <form id="predictionForm" method="POST" class="space-y-6">
+        <!-- Age Input -->
+        <div>
+            <label class="block text-gray-700 font-medium mb-2">Usia:</label>
+            <input type="number" name="Age" required class="w-full px-4 py-3 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 transition duration-300 ease-in-out" style="appearance: none; -moz-appearance: textfield;" />
+        </div>
+        
+        <style>
+            /* Menghilangkan panah pada input number di semua browser */
+            input[type="number"] {
+                -moz-appearance: textfield; /* Firefox */
+                -webkit-appearance: none; /* Chrome, Safari, Edge */
+                appearance: none;
+            }
+        
+            /* Untuk memastikan input tidak menampilkan panah di Safari */
+            input::-webkit-outer-spin-button,
+            input::-webkit-inner-spin-button {
+                -webkit-appearance: none;
+                margin: 0;
+            }
+        </style>
+    
+        <!-- Gender Input -->
+        <div>
+            <label class="block text-gray-700 font-medium">Jenis kelamin:</label>
+            <div class="flex items-center space-x-4">
+                <label class="flex items-center space-x-2">
+                    <input type="radio" name="Gender_Male" value="1" required class="form-radio text-blue-500 focus:ring-blue-500" />
+                    <span>Pria</span>
+                </label>
+                <label class="flex items-center space-x-2">
+                    <input type="radio" name="Gender_Male" value="0" required class="form-radio text-blue-500 focus:ring-blue-500" />
+                    <span>Perempuan</span>
+                </label>
+            </div>
+        </div>
+    
+        <!-- Symptoms -->
+        <div class="space-y-2">
+            <label class="block text-gray-700 font-medium">Gejala:</label>
+            <div class="grid grid-cols-2 gap-4">
+                <!-- Polyuria -->
+                <div class="flex items-center space-x-2">
+                    <input type="checkbox" name="Polyuria_Yes" value="1" class="form-checkbox text-blue-500" />
+                    <span>Poliuria</span>
+                    <input type="hidden" name="Polyuria_Yes" value="0" />
+                </div>
+                <!-- Polydipsia -->
+                <div class="flex items-center space-x-2">
+                    <input type="checkbox" name="Polydipsia_Yes" value="1" class="form-checkbox text-blue-500" />
+                    <span>Polidipsia</span>
+                    <input type="hidden" name="Polydipsia_Yes" value="0" />
+                </div>
+                <!-- Sudden Weight Loss -->
+                <div class="flex items-center space-x-2">
+                    <input type="checkbox" name="sudden_weight_loss_Yes" value="1" class="form-checkbox text-blue-500" />
+                    <span>Penurunan Berat Badan Cepat</span>
+                    <input type="hidden" name="sudden_weight_loss_Yes" value="0" />
+                </div>
+                <!-- Weakness -->
+                <div class="flex items-center space-x-2">
+                    <input type="checkbox" name="weakness_Yes" value="1" class="form-checkbox text-blue-500" />
+                    <span>Kelemahan</span>
+                    <input type="hidden" name="weakness_Yes" value="0" />
+                </div>
+                <!-- Polyphagia -->
+                <div class="flex items-center space-x-2">
+                    <input type="checkbox" name="Polyphagia_Yes" value="1" class="form-checkbox text-blue-500" />
+                    <span>Polifagia</span>
+                    <input type="hidden" name="Polyphagia_Yes" value="0" />
+                </div>
+                <!-- Genital Thrush -->
+                <div class="flex items-center space-x-2">
+                    <input type="checkbox" name="Genital_thrush_Yes" value="1" class="form-checkbox text-blue-500" />
+                    <span>Sariawan Kelamin</span>
+                    <input type="hidden" name="Genital_thrush_Yes" value="0" />
+                </div>
+                <!-- Visual Blurring -->
+                <div class="flex items-center space-x-2">
+                    <input type="checkbox" name="visual_blurring_Yes" value="1" class="form-checkbox text-blue-500" />
+                    <span>Penglihatan Kabur</span>
+                    <input type="hidden" name="visual_blurring_Yes" value="0" />
+                </div>
+                <!-- Itching -->
+                <div class="flex items-center space-x-2">
+                    <input type="checkbox" name="Itching_Yes" value="1" class="form-checkbox text-blue-500" />
+                    <span>Gatal</span>
+                    <input type="hidden" name="Itching_Yes" value="0" />
+                </div>
+                <!-- Irritability -->
+                <div class="flex items-center space-x-2">
+                    <input type="checkbox" name="Irritability_Yes" value="1" class="form-checkbox text-blue-500" />
+                    <span>Sifat Mudah Marah</span>
+                    <input type="hidden" name="Irritability_Yes" value="0" />
+                </div>
+                <!-- Delayed Healing -->
+                <div class="flex items-center space-x-2">
+                    <input type="checkbox" name="delayed_healing_Yes" value="1" class="form-checkbox text-blue-500" />
+                    <span>Penyembuhan Tertunda</span>
+                    <input type="hidden" name="delayed_healing_Yes" value="0" />
+                </div>
+                <!-- Partial Paresis -->
+                <div class="flex items-center space-x-2">
+                    <input type="checkbox" name="partial_paresis_Yes" value="1" class="form-checkbox text-blue-500" />
+                    <span>Paresis Parsial</span>
+                    <input type="hidden" name="partial_paresis_Yes" value="0" />
+                </div>
+                <!-- Muscle Stiffness -->
+                <div class="flex items-center space-x-2">
+                    <input type="checkbox" name="muscle_stiffness_Yes" value="1" class="form-checkbox text-blue-500" />
+                    <span>Kekakuan Otot</span>
+                    <input type="hidden" name="muscle_stiffness_Yes" value="0" />
+                </div>
+                <!-- Alopecia -->
+                <div class="flex items-center space-x-2">
+                    <input type="checkbox" name="Alopecia_Yes" value="1" class="form-checkbox text-blue-500" />
+                    <span>Alopecia</span>
+                    <input type="hidden" name="Alopecia_Yes" value="0" />
+                </div>
+                <!-- Obesity -->
+                <div class="flex items-center space-x-2">
+                    <input type="checkbox" name="Obesity_Yes" value="1" class="form-checkbox text-blue-500" />
+                    <span>Obesitas</span>
+                    <input type="hidden" name="Obesity_Yes" value="0" />
+                </div>
+            </div>
+        </div>
+    
+        <!-- Submit Button -->
+        <button type="submit" class="w-full bg-blue-500 text-white py-3 rounded-lg font-medium hover:bg-blue-600 transition duration-200 ease-in-out">
+            Prediction
+        </button>
+    </form>
+    
+
+      <div id="result" class="mt-6 text-center text-lg font-medium text-gray-700">
+        <!-- Prediction result and health tips will be displayed here -->
+      </div>
+    </div>
+    <script>
+        const video = document.querySelector("video");
+        video.addEventListener("ended", () => {
+            video.currentTime = 0; // Kembali ke awal tanpa jeda
+            video.play(); // Mulai lagi
+        });
+    </script>
+    
+
+    <script src="{{ url_for('static', filename='js/script.js') }}" defer></script>
+  </body>
+</html>
